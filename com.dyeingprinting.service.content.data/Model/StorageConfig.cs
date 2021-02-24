@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace com.bateeqshop.service.content.data.Model
+namespace com.dyeingprinting.service.content.data.Model
 {
-    public class MyConfig
+    public class Storage
     {
         public string StorageConnection { get; set; }
         public string Container { get; set; }

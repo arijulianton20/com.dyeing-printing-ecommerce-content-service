@@ -1,5 +1,5 @@
-﻿using com.bateeqshop.service.content.data;
-using com.bateeqshop.service.content.data.Model;
+﻿using com.dyeingprinting.service.content.data;
+using com.dyeingprinting.service.content.data.Model;
 using EWorkplaceAbsensiService.Lib.Helpers.IdentityService;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Com.Moonlay.Models;
 
-namespace com.bateeqshop.service.content.business.Service
+namespace com.dyeingprinting.service.content.business.Service
 {
     public class MobileContentService : IService<MobileContent>
     {

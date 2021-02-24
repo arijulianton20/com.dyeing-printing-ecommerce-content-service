@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using com.bateeqshop.service.content.data;
+using com.dyeingprinting.service.content.data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace com.bateeqshop.service.content.api
+namespace com.dyeingprinting.service.content.api
 {
     public class Program
     {

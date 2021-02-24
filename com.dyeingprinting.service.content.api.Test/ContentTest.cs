@@ -1,7 +1,7 @@
-using com.bateeqshop.service.content.api.Controllers;
-using com.bateeqshop.service.content.business;
-using com.bateeqshop.service.content.business.Service;
-using com.bateeqshop.service.content.data.Model;
+using com.dyeingprinting.service.content.api.Controllers;
+using com.dyeingprinting.service.content.business;
+using com.dyeingprinting.service.content.business.Service;
+using com.dyeingprinting.service.content.data.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Threading.Tasks;
 
-namespace com.bateeqshop.service.content.api.Test
+namespace com.dyeingprinting.service.content.api.Test
 {
     [TestClass]
     public class ContentTest

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using com.bateeqshop.service.content.data.Model;
+using com.dyeingprinting.service.content.data.Model;
 using Com.Moonlay.Models;
 
-namespace com.bateeqshop.service.content.business
+namespace com.dyeingprinting.service.content.business
 {
     public interface IService<TModel>
     {

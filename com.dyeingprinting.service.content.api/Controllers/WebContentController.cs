@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using com.bateeqshop.service.content.business;
-using com.bateeqshop.service.content.data.Model;
+using com.dyeingprinting.service.content.business;
+using com.dyeingprinting.service.content.data.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace com.bateeqshop.service.content.api.Controllers
+namespace com.dyeingprinting.service.content.api.Controllers
 {
     [ApiController]
-    [Route("webcontent")]
+    [ApiVersion("1.0")]
+    [Route("v{version:apiVersion}/web-content")]
     public class WebContentController : ControllerBase
     {
         private readonly ILogger<WebContentController> _logger;
@@ -29,7 +30,7 @@ namespace com.bateeqshop.service.content.api.Controllers
             try
             {
                 var result = await _service.FindAsync();
-                return Ok(result);
+                return Ok(new { StatusCode = (int)HttpStatusCode.OK, Data = result });
             }
             catch (Exception e)
             {
@@ -41,24 +42,37 @@ namespace com.bateeqshop.service.content.api.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] WebContent webContent)
         {
- 
-
+            try
+            {
                 await _service.Create(webContent);
-                return CreatedAtRoute(
-                "Get",
-                new { Id = webContent.Id },
-                webContent);
-                //var result = new ResultFormatter(API_VERSION, General.CREATED_STATUS_CODE, General.OK_MESSAGE)
-                //  .Ok();
-                //return Created(string.Concat(Request.Path, "/", 0), result);
-            
+                
+                return CreatedAtRoute("Get", new { Id = webContent.Id }, webContent);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+            //var result = new ResultFormatter(API_VERSION, General.CREATED_STATUS_CODE, General.OK_MESSAGE)
+            //  .Ok();
+            //return Created(string.Concat(Request.Path, "/", 0), result);
+
         }
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
+            try
+            {
                 var webContent = await _service.GetSingleById(id);
-                return Ok(webContent);
+
+                return Ok(new { StatusCode = (int)HttpStatusCode.OK, Data = webContent });
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
         }
 
         [HttpPut("{id}")]
@@ -72,24 +86,23 @@ namespace com.bateeqshop.service.content.api.Controllers
                 }*/
                 WebContent webContent1 = await _service.GetSingleById(id);
 
-            /*    if (webContent1 == null)
-                {
-                    return NotFound("The  record couldn't be found.");
-                }*/
+                /*    if (webContent1 == null)
+                    {
+                        return NotFound("The  record couldn't be found.");
+                    }*/
                 await _service.Update(webContent1, webContent);
 
-                return NoContent();
+                return Ok(new { StatusCode = (int)HttpStatusCode.OK, Data = webContent });
             }
-            catch(Exception e) {
-                return StatusCode(500);
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
-         
+
             /*WebContent webContentToUpdate = await _service.GetSingleById(id);
             await _service.Update(webContentToUpdate, webContent);
             return NoContent();*/
-
-
-
         }
 
         [HttpDelete("{id}")]
@@ -97,14 +110,14 @@ namespace com.bateeqshop.service.content.api.Controllers
         {
             try
             {
-               
                 await _service.Delete(id);
-                return NoContent();
+
+                return Ok(new { StatusCode = (int)HttpStatusCode.OK, Data = new { }, Message = "Success" });
             }
             catch (Exception e)
             {
-                
-                return StatusCode(500);
+                _logger.LogError(e, e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
     }

@@ -1,5 +1,5 @@
-﻿using com.bateeqshop.service.content.data;
-using com.bateeqshop.service.content.data.Model;
+﻿using com.dyeingprinting.service.content.data;
+using com.dyeingprinting.service.content.data.Model;
 using Com.Moonlay.Models;
 using EWorkplaceAbsensiService.Lib.Helpers.IdentityService;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.bateeqshop.service.content.business.Service
+namespace com.dyeingprinting.service.content.business.Service
 {
     public class WebContentService : IService<WebContent>
     {
@@ -31,8 +31,6 @@ namespace com.bateeqshop.service.content.business.Service
             _WebContentDbSet.Add(model);
             return _context.SaveChangesAsync();
         }
-
-
 
         public List<WebContent> Find()
         {

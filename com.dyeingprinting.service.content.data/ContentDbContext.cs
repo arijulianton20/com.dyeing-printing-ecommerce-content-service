@@ -1,10 +1,10 @@
-﻿using com.bateeqshop.service.content.data.Config;
-using com.bateeqshop.service.content.data.Model;
+﻿using com.dyeingprinting.service.content.data.Config;
+using com.dyeingprinting.service.content.data.Model;
 using Com.Moonlay.Data.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace com.bateeqshop.service.content.data
+namespace com.dyeingprinting.service.content.data
 {
     public class ContentDbContext : StandardDbContext
     {

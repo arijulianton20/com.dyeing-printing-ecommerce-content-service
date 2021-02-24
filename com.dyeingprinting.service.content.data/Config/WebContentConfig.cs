@@ -1,11 +1,11 @@
-﻿using com.bateeqshop.service.content.data.Model;
+﻿using com.dyeingprinting.service.content.data.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace com.bateeqshop.service.content.data.Config
+namespace com.dyeingprinting.service.content.data.Config
 {
     public class WebContentConfig : IEntityTypeConfiguration<WebContent>
     {

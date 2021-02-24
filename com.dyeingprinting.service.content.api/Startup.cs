@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using com.bateeqshop.service.content.business;
-using com.bateeqshop.service.content.business.Service;
-using com.bateeqshop.service.content.data;
-using com.bateeqshop.service.content.data.Model;
+using com.dyeingprinting.service.content.business;
+using com.dyeingprinting.service.content.business.Service;
+using com.dyeingprinting.service.content.data;
+using com.dyeingprinting.service.content.data.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace com.bateeqshop.service.content.api
+namespace com.dyeingprinting.service.content.api
 {
     public class Startup
     {
@@ -30,15 +30,9 @@ namespace com.bateeqshop.service.content.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(o => o.AddPolicy("CorePolicy", builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader()
-                       .WithExposedHeaders("Content-Disposition", "api-version", "content-length", "content-md5", "content-type", "date", "request-id", "response-time");
-            }));
 
-            services.Configure<MyConfig>(Configuration.GetSection("MyConfig"));
+            services.AddApiVersioning(options => options.DefaultApiVersion = new ApiVersion(1, 0));
+            services.Configure<Storage>(Configuration.GetSection("Storage"));
             services.AddControllers();
             services.AddDbContext<ContentDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IService<MobileContent>, MobileContentService>();
@@ -46,7 +40,16 @@ namespace com.bateeqshop.service.content.api
 
             services.AddSwaggerGen();
 
-
+            #region Cors
+            services.AddCors(o => o.AddPolicy("CorePolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .WithMethods("POST", "GET", "DELETE", "PUT", "OPTIONS");
+                //.WithExposedHeaders("Content-Disposition", "api-version", "content-length", "content-md5", "content-type", "date", "request-id", "response-time");
+            }));
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using com.bateeqshop.service.content.business;
-using com.bateeqshop.service.content.data.Model;
+using com.dyeingprinting.service.content.business;
+using com.dyeingprinting.service.content.data.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace com.bateeqshop.service.content.api.Controllers
+namespace com.dyeingprinting.service.content.api.Controllers
 {
     [ApiController]
     [Route("mobilecontent")]

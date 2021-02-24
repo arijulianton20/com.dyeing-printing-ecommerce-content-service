@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace com.bateeqshop.service.content.data.Migrations
+namespace com.dyeingprinting.service.content.data.Migrations
 {
     public partial class InitialCreate : Migration
     {

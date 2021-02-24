@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using com.bateeqshop.service.content.data;
+using com.dyeingprinting.service.content.data;
 
-namespace com.bateeqshop.service.content.data.Migrations
+namespace com.dyeingprinting.service.content.data.Migrations
 {
     [DbContext(typeof(ContentDbContext))]
     [Migration("20201130214925_Add_Category_WebContentModel")]
@@ -21,7 +21,7 @@ namespace com.bateeqshop.service.content.data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("com.bateeqshop.service.content.data.Model.MobileContent", b =>
+            modelBuilder.Entity("com.dyeingprinting.service.content.data.Model.MobileContent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -98,7 +98,7 @@ namespace com.bateeqshop.service.content.data.Migrations
                     b.ToTable("MobileContents");
                 });
 
-            modelBuilder.Entity("com.bateeqshop.service.content.data.Model.WebContent", b =>
+            modelBuilder.Entity("com.dyeingprinting.service.content.data.Model.WebContent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
