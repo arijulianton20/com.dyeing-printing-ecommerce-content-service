@@ -39,7 +39,7 @@ namespace com.dyeingprinting.service.content.api
             services.AddDbContext<ContentDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IService<MobileContent>, MobileContentService>();
             services.AddTransient<IService<WebContent>, WebContentService>();
-
+            services.AddTransient<IService<CustomerCare>, CustomerCareService>();
             services.AddSwaggerGen();
 
             #region Cors
