@@ -20,6 +20,8 @@ namespace com.dyeingprinting.service.content.api
 {
     public class Startup
     {
+        private readonly string[] EXPOSED_HEADERS = new string[] { "Content-Disposition", "api-version", "content-length", "content-md5", "content-type", "date", "request-id", "response-time" };
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -46,7 +48,8 @@ namespace com.dyeingprinting.service.content.api
                 builder.AllowAnyOrigin()
                        .AllowAnyMethod()
                        .AllowAnyHeader()
-                       .WithMethods("POST", "GET", "DELETE", "PUT", "OPTIONS");
+                       .WithMethods("POST", "GET", "DELETE", "PUT", "OPTIONS")
+                       .WithExposedHeaders(EXPOSED_HEADERS);
                 //.WithExposedHeaders("Content-Disposition", "api-version", "content-length", "content-md5", "content-type", "date", "request-id", "response-time");
             }));
             #endregion
