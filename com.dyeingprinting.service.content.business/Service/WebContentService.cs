@@ -53,9 +53,9 @@ namespace com.dyeingprinting.service.content.business.Service
             return _context.WebContents.ToList();
         }
 
-        public Task<List<WebContent>> FindAsync()
+        public async Task<List<WebContent>> FindAsync()
         {
-            return _context.WebContents.ToListAsync();
+            return await _context.WebContents.ToListAsync();
         }
 
         public Task<WebContent> GetSingleById(int id)
