@@ -21,6 +21,10 @@ namespace com.dyeingprinting.service.content.data
             modelBuilder.ApplyConfiguration(new MobileContentConfig());
             modelBuilder.ApplyConfiguration(new WebContentConfig());
             modelBuilder.ApplyConfiguration(new CustomerCareConfig());
+
+            modelBuilder.Entity<MobileContent>().HasQueryFilter(entity => entity.IsDeleted == false);
+            modelBuilder.Entity<WebContent>().HasQueryFilter(entity => entity.IsDeleted == false);
+            modelBuilder.Entity<CustomerCare>().HasQueryFilter(entity => entity.IsDeleted == false);
         }
     }
 }
