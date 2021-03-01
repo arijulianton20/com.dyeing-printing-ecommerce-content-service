@@ -17,19 +17,35 @@ namespace com.dyeingprinting.service.content.business.Service
         private readonly ContentDbContext _context;
         private readonly DbSet<WebContent> _WebContentDbSet;
         private readonly IIdentityService _identityService;
-        private const string USER_AGENT = "Core Service";
+        private const string _userBy = "DP-CONTENT";
+        private const string _userAgent = "DP-CONTENT";
+
         public WebContentService(ContentDbContext context, IServiceProvider serviceProvider)
         {
             _context = context;
             _WebContentDbSet = context.Set<WebContent>();
             _identityService = serviceProvider.GetService<IIdentityService>();
-        
-    }
+        }
 
-        public Task<int> Create(WebContent model)
+        public async Task<int> Create(WebContent model)
         {
-            _WebContentDbSet.Add(model);
-            return _context.SaveChangesAsync();
+            var transaction = _context.Database.BeginTransaction();
+
+            try
+            {
+                EntityExtension.FlagForCreate(model, _userBy, _userAgent);
+                _context.WebContents.Add(model);
+                var result = await _context.SaveChangesAsync();
+
+                transaction.Commit();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                throw e;
+            }
         }
 
         public List<WebContent> Find()
@@ -37,9 +53,9 @@ namespace com.dyeingprinting.service.content.business.Service
             return _context.WebContents.ToList();
         }
 
-        public Task<List<WebContent>> FindAsync()
+        public async Task<List<WebContent>> FindAsync()
         {
-            return _context.WebContents.ToListAsync();
+            return await _context.WebContents.ToListAsync();
         }
 
         public Task<WebContent> GetSingleById(int id)
@@ -47,29 +63,52 @@ namespace com.dyeingprinting.service.content.business.Service
             return _WebContentDbSet.FirstOrDefaultAsync(entity => entity.Id == id);
         }
 
-        public Task<int> Update(WebContent dbmodel, WebContent model)
+        public async Task<int> Update(WebContent dbmodel, WebContent model)
         {
-            dbmodel.Name = model.Name;
-            dbmodel.Title = model.Title;
-            dbmodel.Description = model.Description;
-            dbmodel.ImageUrl = model.ImageUrl;
-            dbmodel.Link = model.Link;
-            dbmodel.Order = model.Order;
-            dbmodel.LinkYoutube = model.LinkYoutube;
-            dbmodel.TextButton = model.TextButton;
-            return _context.SaveChangesAsync();
+            var transaction = _context.Database.BeginTransaction();
+
+            try
+            {
+                dbmodel.UpdateData(model);
+                EntityExtension.FlagForUpdate(dbmodel, _userBy, _userAgent);
+                _context.WebContents.Update(dbmodel);
+                var result = await _context.SaveChangesAsync();
+
+                transaction.Commit();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                throw e;
+            }
         }
 
         public async Task<int> Delete(int id)
         {
-            var model = await GetSingleById(id);
+            var transaction = _context.Database.BeginTransaction();
 
-            if (model == null)
-                throw new Exception("Invalid Id");
+            try
+            {
+                var model = await GetSingleById(id);
 
-            EntityExtension.FlagForDelete(model, "test", "test");
-            _WebContentDbSet.Update(model);
-            return await _context.SaveChangesAsync();
+                if (model == null)
+                    throw new Exception("Invalid Id");
+
+                EntityExtension.FlagForDelete(model, _userBy, _userAgent);
+                _WebContentDbSet.Update(model);
+                var result = await _context.SaveChangesAsync();
+
+                transaction.Commit();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                throw e;
+            }
         }
     }
 }

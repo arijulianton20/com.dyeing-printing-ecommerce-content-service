@@ -20,6 +20,8 @@ namespace com.dyeingprinting.service.content.api
 {
     public class Startup
     {
+        private readonly string[] EXPOSED_HEADERS = new string[] { "Content-Disposition", "api-version", "content-length", "content-md5", "content-type", "date", "request-id", "response-time" };
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -37,7 +39,7 @@ namespace com.dyeingprinting.service.content.api
             services.AddDbContext<ContentDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IService<MobileContent>, MobileContentService>();
             services.AddTransient<IService<WebContent>, WebContentService>();
-
+            services.AddTransient<IService<CustomerCare>, CustomerCareService>();
             services.AddSwaggerGen();
 
             #region Cors
@@ -46,7 +48,8 @@ namespace com.dyeingprinting.service.content.api
                 builder.AllowAnyOrigin()
                        .AllowAnyMethod()
                        .AllowAnyHeader()
-                       .WithMethods("POST", "GET", "DELETE", "PUT", "OPTIONS");
+                       .WithMethods("POST", "GET", "DELETE", "PUT", "OPTIONS")
+                       .WithExposedHeaders(EXPOSED_HEADERS);
                 //.WithExposedHeaders("Content-Disposition", "api-version", "content-length", "content-md5", "content-type", "date", "request-id", "response-time");
             }));
             #endregion

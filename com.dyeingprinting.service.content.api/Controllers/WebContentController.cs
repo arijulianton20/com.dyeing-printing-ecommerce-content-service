@@ -45,8 +45,10 @@ namespace com.dyeingprinting.service.content.api.Controllers
             try
             {
                 await _service.Create(webContent);
-                
-                return CreatedAtRoute("Get", new { Id = webContent.Id }, webContent);
+                //return CreatedAtRoute("Get", new { Id = webContent.Id }, webContent);
+
+                var result = new { StatusCode = (int)HttpStatusCode.OK, Message = "Success", Data = new { } };
+                return Ok(result);
             }
             catch (Exception e)
             {
